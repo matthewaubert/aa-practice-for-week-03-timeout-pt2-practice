@@ -13,20 +13,40 @@ node with the examples below.
 Examples:
 
 dynamicIntervalCount(function() {
-    console.log('hi');
+  console.log('hi');
 }, 500, 3); // prints 'hi' at 500ms intervals a total of 3 times
 
 
 const timeoutObject = dynamicIntervalCount(function() {
-    console.log('hi');
+  console.log('hi');
 }, 500); // prints 'hi' at 500ms intervals indefinitely
 
 console.log(timeoutObject); // Timeout { ... }
 ***********************************************************************/
 
 function dynamicIntervalCount(cb, delay, amount) {
-  // Your code here
+  // if amount is undefined, return setInterval(cb, delay)
+  if (amount === undefined) return setInterval(cb, delay);
+
+  // set intervalObj to res of setInterval; input: anon func, delay
+  const intervalObj = setInterval(() => {
+    cb(); // invoke cb
+    amount--; // decrement amount
+    if (amount < 1) clearInterval(intervalObj); // if amount < 1, invoke clearInterval(intervalObj)
+  }, delay);
 }
+
+
+// dynamicIntervalCount(function() {
+//   console.log('hi');
+// }, 500, 3); // prints 'hi' at 500ms intervals a total of 3 times
+
+
+// const timeoutObject = dynamicIntervalCount(function() {
+//   console.log('bye');
+// }, 500); // prints 'hi' at 500ms intervals indefinitely
+
+// console.log(timeoutObject); // Timeout { ... }
 
 /**************DO NOT MODIFY ANYTHING UNDER THIS  LINE*****************/
 try {
